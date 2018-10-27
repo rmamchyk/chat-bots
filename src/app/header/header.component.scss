@@ -1,0 +1,19 @@
+nav.navbar {
+    background-color: #fff;
+    border-radius: 0;
+    margin: 0;
+
+    .navbar-brand {
+        font-size: 26px;
+    }
+
+    li > a {
+        color: #586670;
+        font-size: 16px;
+    }
+
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}

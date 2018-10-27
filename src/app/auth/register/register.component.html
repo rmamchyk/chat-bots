@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-xs-8 col-sm-6 col-md-5 col-xs-offset-2 col-sm-offset-3 col-md-offset-4">
+      <form class="login-form" (ngSubmit)="onRegister()" #f="ngForm" autocomplete="off">
+        <div class="form-title">Register</div>
+        <hr>
+        <div class="form-group">
+          <label for="email">Username</label>
+          <input type="email" id="email" name="email" class="form-control" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" ngModel>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" ngModel>
+        </div>
+        <hr>
+        <div class="p-group">
+            <span class="btn-login"><a routerLink="/login">Login</a></span>
+            <button class="btn btn-primary btn-register" type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>

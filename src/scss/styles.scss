@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+    height:100%;
+    color: #586670;
+
+    input {
+        color: #333;
+    }
+    
+    form.login-form {
+        background: #D8DFE7;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+        margin-bottom: 50px;
+        border-radius: 4px;
+        padding: 10px 30px 15px 30px;
+        margin-top: 130px;
+        width: 400px;
+    
+        .form-title {
+            font-size: 26px;
+            text-align: center;
+        }
+    
+        .form-control {
+            padding: 5px 10px;
+            height: 32px;
+        }
+    
+        hr {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    
+        label {
+            font-weight: 500;
+            margin-bottom: 1px;
+        }
+    
+        .form-group {
+            margin-bottom: 15px;
+        }
+    
+        .btn-register {
+            float: right;
+        }
+    
+        .btn-login {
+            float: left;
+            padding: 5px;
+        }
+    
+        .btn {
+            min-width: 100px;
+        }
+    }
+}
