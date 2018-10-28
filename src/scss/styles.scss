@@ -22,6 +22,7 @@ html, body {
         .form-title {
             font-size: 26px;
             text-align: center;
+            font-weight: bold;
         }
     
         .form-control {
@@ -54,6 +55,19 @@ html, body {
     
         .btn {
             min-width: 100px;
+        }
+
+        input.ng-invalid.ng-touched,
+        textarea.ng-invalid.ng-touched {
+             border: 1px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin: 0;
+            display: block;
+            line-height: 12px;
         }
     }
 }

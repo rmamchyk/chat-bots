@@ -5,15 +5,27 @@
         <hr>
         <div class="form-group">
           <label for="email">Username</label>
-          <input type="email" id="email" name="email" class="form-control" ngModel>
+          <input type="text" name="username" class="form-control" ngModel required minlength="5" #username="ngModel">
+          <div class="error-message" *ngIf="username.invalid && username.touched">
+              <span *ngIf="username.errors.required">Username is required</span>
+              <span *ngIf="username.errors.minlength">Username cannot be less than 5 characters</span>
+          </div>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" ngModel>
+          <input type="email" name="email" class="form-control" ngModel required email #email="ngModel">
+          <div class="error-message" *ngIf="email.invalid && email.touched">
+              <span *ngIf="email.errors.required">Email is required</span>
+              <span *ngIf="email.errors.email">Email is invalid</span>
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" ngModel>
+          <input type="password" name="password" class="form-control" ngModel required minlength="5" #password="ngModel">
+          <div class="error-message" *ngIf="password.invalid && password.touched">
+              <span *ngIf="password.errors.required">Password is required</span>
+              <span *ngIf="password.errors.minlength">Password cannot be less than 5 characters</span>
+          </div>
         </div>
         <hr>
         <div class="p-group">

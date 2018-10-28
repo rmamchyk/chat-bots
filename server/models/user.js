@@ -15,7 +15,7 @@ var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        minlength: 3,
+        minlength: 5,
         trim: true,
         unique: true,
         validate: {
@@ -26,7 +26,7 @@ var UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 3
+        minlength: 5
     },
     tokens: [{
         access: {

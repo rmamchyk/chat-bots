@@ -10,4 +10,8 @@ export class LoginComponent {
 
   constructor() { }
 
+  onLogin() {
+    this.loginForm;
+  }
+
 }
