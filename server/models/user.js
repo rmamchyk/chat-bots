@@ -43,7 +43,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function(){
   var user = this;
   var userObj = user.toObject();
-  return _.pick(userObj, ['_id', 'email']);
+  return _.pick(userObj, ['_id', 'username']);
 };
 
 UserSchema.methods.generateAuthToken = function() {
@@ -85,10 +85,10 @@ UserSchema.statics.findByToken = function(token) {
   });
 };
 
-UserSchema.statics.findByCredentials = function(email, password) {
+UserSchema.statics.findByCredentials = function(username, password) {
   var User = this;
 
-  return User.findOne({email}).then((user)=>{
+  return User.findOne({username}).then((user)=>{
     if (!user){
       return Promise.reject();
     }

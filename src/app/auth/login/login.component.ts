@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ValidatorHelper } from './../../helpers/ValidatorHelper';
+import { AuthService } from './../auth.service';
 
 @Component({
    selector: 'app-login',
@@ -11,7 +12,7 @@ import { ValidatorHelper } from './../../helpers/ValidatorHelper';
 export class LoginComponent implements OnInit {
    loginForm: FormGroup;
 
-   constructor() { }
+   constructor(private authService: AuthService) { }
 
    ngOnInit() {
       this.loginForm = new FormGroup({
@@ -29,5 +30,6 @@ export class LoginComponent implements OnInit {
          ValidatorHelper.validateAllFormFields(this.loginForm); 
          return;
       }
+      this.authService.login(this.username.value, this.password.value);
    }
 }

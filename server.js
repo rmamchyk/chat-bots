@@ -3,6 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
+require('./server/config/config');
+require('./server/db/mongoose');
 
 // Getting our routes
 const users = require('./server/routes/users');
