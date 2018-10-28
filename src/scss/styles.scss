@@ -7,6 +7,28 @@ html, body {
     input {
         color: #333;
     }
+
+    form.submitted {
+        input.ng-invalid,
+        textarea.ng-invalid {
+             border: 1px solid red;
+        }
+    }
+
+    form {
+        input.ng-invalid.ng-touched,
+        textarea.ng-invalid.ng-touched {
+             border: 1px solid red;
+        }
+    }
+
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin: 0;
+        display: block;
+        line-height: 12px;
+    }
     
     form.login-form {
         background: #D8DFE7;
@@ -55,19 +77,6 @@ html, body {
     
         .btn {
             min-width: 100px;
-        }
-
-        input.ng-invalid.ng-touched,
-        textarea.ng-invalid.ng-touched {
-             border: 1px solid red;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 12px;
-            margin: 0;
-            display: block;
-            line-height: 12px;
         }
     }
 }

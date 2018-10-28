@@ -1,5 +1,7 @@
+import { ValidatorHelper } from './helpers/ValidatorHelper';
+import { Validators } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 
 import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
@@ -21,4 +23,8 @@ import { HeaderComponent } from './header/header.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule implements OnInit {
+  ngOnInit(): void {
+    Validators.minLength = ValidatorHelper.minLength;
+  }
+}
