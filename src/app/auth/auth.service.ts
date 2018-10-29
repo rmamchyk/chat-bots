@@ -10,14 +10,22 @@ export class AuthService {
     constructor(private router: Router,
         private http: HttpClient) {}
 
-    isAuthenticated() {
+    isAuthenticated(): boolean {
         return !!localStorage.getItem('currentUser');
     }
 
+    getCurrentUser(): User {
+        return JSON.parse(localStorage.getItem('currentUser'));
+    }
+
     logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        this.router.navigate(['/login']);
+        return this.http.delete('/users/logout').subscribe(
+            res => {
+                // remove user from local storage to log user out
+                localStorage.removeItem('currentUser');
+                this.router.navigate(['/login']);
+            },
+            (err) => console.log(err));
     }
 
     login(username: string, password: string) {

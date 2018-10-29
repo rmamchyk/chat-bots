@@ -42,5 +42,8 @@ module.exports = {
                 }
             });
         });
+    },
+    async logoutUser(user) {
+        return await user.removeToken();
     }
 };

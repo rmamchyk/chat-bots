@@ -36,25 +36,22 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function(){
   var user = this;
   var userObj = user.toObject();
-  return _.pick(userObj, ['_id', 'username', 'token']);
+  return _.pick(userObj, ['_id', 'username', 'email', 'token']);
 };
 
 UserSchema.methods.generateToken = function() {
    let user = this;
-   this.token = jwt.sign(user._id.toHexString(), process.env.JWT_SECRET).toString();
-
+   user.token = jwt.sign({_id: user._id.toHexString()}, process.env.JWT_SECRET).toString();
    return user.save(() => {
       return user;
    });
 };
 
-UserSchema.methods.removeToken = function(token) {
-  var user = this;
-
-  return user.update({
-    $pull: {
-      tokens: {token}
-    }
+UserSchema.methods.removeToken = function() {
+  let user = this;
+  user.token = null;
+  return user.save(() => {
+     return user;
   });
 };
 
@@ -64,10 +61,10 @@ UserSchema.statics.findByToken = function(token) {
 
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('DECODED: ', decoded);
   } catch (e) {
     return Promise.reject();
   }
-
   return User.findOne({
     _id: decoded._id,
     token: token

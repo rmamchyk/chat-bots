@@ -36,14 +36,14 @@ export class RegisterComponent implements OnInit {
      }
      this.authService.register(this.username.value, 
         this.email.value, this.password.value).subscribe(
-          (res) => {
+          res => {
             if (res.errors && res.errors.length > 0) {
               res.errors.forEach(err => {
                  this.errors.push(err);
                });
             }
           },
-          (err) => console.log(err)
+          err => console.log(err)
       );
   }
 }
