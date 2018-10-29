@@ -3,18 +3,22 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
-require('./server/config/config');
-require('./server/db/mongoose');
 
-// Getting our routes
-const users = require('./server/routes/users');
+// Load config 
+require('./server/config/config');
+
+// Connect to Mongo
+require('./server/common/dbConnection');
 
 // Using middleware
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// Setting our routes
+// Getting routes
+const users = require('./server/controllers/user.controller');
+
+// Setting routes
 app.use('/users', users);
 
 // Catch all other routes request and return it to the index

@@ -24,38 +24,28 @@ var UserSchema = new mongoose.Schema({
         }
     },
     password: {
-        type: String,
-        required: true,
-        minlength: 5
+      type: String,
+      required: true,
+      minlength: 5
     },
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        },
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    token: {
+      type: String
+    }
 });
 
 UserSchema.methods.toJSON = function(){
   var user = this;
   var userObj = user.toObject();
-  return _.pick(userObj, ['_id', 'username']);
+  return _.pick(userObj, ['_id', 'username', 'token']);
 };
 
-UserSchema.methods.generateAuthToken = function() {
-  var user = this;
-  var access = 'auth';
-  var token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString();
+UserSchema.methods.generateToken = function() {
+   let user = this;
+   this.token = jwt.sign(user._id.toHexString(), process.env.JWT_SECRET).toString();
 
-  user.tokens = user.tokens.concat([{access, token}]);
-
-  return user.save().then(()=>{
-    return token;
-  })
+   return user.save(() => {
+      return user;
+   });
 };
 
 UserSchema.methods.removeToken = function(token) {
@@ -80,29 +70,7 @@ UserSchema.statics.findByToken = function(token) {
 
   return User.findOne({
     _id: decoded._id,
-    'tokens.token': token,
-    'tokens.access': 'auth'
-  });
-};
-
-UserSchema.statics.findByCredentials = function(username, password) {
-  var User = this;
-
-  return User.findOne({username}).then((user)=>{
-    if (!user){
-      return Promise.reject();
-    }
-
-    return new Promise((resolve, reject)=>{
-      bcrypt.compare(password, user.password, (err, valid)=>{
-        if(valid){
-          resolve(user);
-        } else {
-          reject();
-        }
-      });
-    });
-
+    token: token
   });
 };
 
@@ -123,4 +91,4 @@ UserSchema.pre('save', function(next) {
 
 var User = mongoose.model('User', UserSchema);
 
-module.exports = {User};
+module.exports = User;

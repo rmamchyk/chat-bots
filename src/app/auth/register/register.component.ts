@@ -11,6 +11,7 @@ import { AuthService } from './../auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  errors: string[] = [];
 
   constructor(private authService: AuthService) { }
 
@@ -28,10 +29,21 @@ export class RegisterComponent implements OnInit {
   get email() { return this.registerForm.get('email'); }
 
   onRegister() {
+      this.errors = [];
      if (this.registerForm.invalid) {
         ValidatorHelper.validateAllFormFields(this.registerForm); 
         return;
      }
-     this.authService.register(this.username.value, this.email.value, this.password.value);
+     this.authService.register(this.username.value, 
+        this.email.value, this.password.value).subscribe(
+          (res) => {
+            if (res.errors && res.errors.length > 0) {
+              res.errors.forEach(err => {
+                 this.errors.push(err);
+               });
+            }
+          },
+          (err) => console.log(err)
+      );
   }
 }

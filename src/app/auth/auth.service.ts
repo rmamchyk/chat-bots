@@ -1,55 +1,48 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
+import { User } from './../shared/user.model';
 
 @Injectable()
 export class AuthService {
-    token: string;
-
     constructor(private router: Router,
-        private httpClient: HttpClient) {}
+        private http: HttpClient) {}
 
     isAuthenticated() {
-        return this.token != null;
+        return !!localStorage.getItem('currentUser');
     }
 
     logout() {
-        //firebase.auth().signOut();
-        this.token = null;
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.router.navigate(['/login']);
     }
 
     login(username: string, password: string) {
-        // firebase.auth().createUserWithEmailAndPassword(email, password)
-        //     .then(response => {})
-        //     .catch(error => console.log(error));
+        return this.http.post<any>('/users/login', {username, password})
+            .pipe(map(res => {
+                // login successful if there's a jwt token in the response
+                if (res.user && res.user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(res.user));
+                    this.router.navigate(['/']);
+                }
+                return res;
+            }));
     }
 
     register(username: string, email: string, password: string) {
-        const req = new HttpRequest('POST', '/users/register',
-            {username, email, password});
-        
-        return this.httpClient.request(req).subscribe(
-            (response) => {
-                console.log(response);
-            },
-            (error) => console.log(error)
-        );;
-
-        //By calling this method the user token will be automatically stored 
-        //on client side by firebase SDK in localStorage or IndexDB. 
-        //So that we don't need to store this token manually.
-        // firebase.auth().signInWithEmailAndPassword(email, password)
-        //     .then(response => {
-        //         this.router.navigate(['/']);
-        //         firebase.auth().currentUser.getIdToken()
-        //             .then((token: string)=> this.token = token)
-        //     })
-        //     .catch(error => console.log(error));
-    }
-
-    getToken() {
-        // firebase.auth().currentUser.getIdToken()
-        //     .then((token: string) => this.token = token);
-        // return this.token;
+        return this.http.post<any>('/users/register', {username, email, password})
+            .pipe(map(res => {
+                // login successful if there's a jwt token in the response
+                if (res && res.user && res.user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(res.user));
+                    this.router.navigate(['/']);
+                }
+                return res;
+            }));
     }
 }

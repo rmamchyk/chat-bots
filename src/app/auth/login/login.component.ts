@@ -11,6 +11,7 @@ import { AuthService } from './../auth.service';
 })
 export class LoginComponent implements OnInit {
    loginForm: FormGroup;
+   errors: string[] = [];
 
    constructor(private authService: AuthService) { }
 
@@ -26,10 +27,20 @@ export class LoginComponent implements OnInit {
    get password() { return this.loginForm.get('password'); }
 
    onLogin() {
+      this.errors = [];
       if (this.loginForm.invalid) {
          ValidatorHelper.validateAllFormFields(this.loginForm); 
          return;
       }
-      this.authService.login(this.username.value, this.password.value);
+      this.authService.login(this.username.value, this.password.value).subscribe(
+         (res) => {
+             if (res.errors && res.errors.length > 0) {
+               res.errors.forEach(err => {
+                  this.errors.push(err);
+                });
+             }
+         },
+         (err) => console.log(err)
+     );
    }
 }

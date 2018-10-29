@@ -8,6 +8,11 @@ html, body {
         color: #333;
     }
 
+    div.alert {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
     form.submitted {
         input.ng-invalid,
         textarea.ng-invalid {
