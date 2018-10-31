@@ -10,7 +10,18 @@
                     <li routerLinkActive="active"><a routerLink="/login">Login</a></li>
                     <li routerLinkActive="active"><a routerLink="/register">Register</a></li>
                 </ng-template>
-                <li><a (click)="onLogout()" *ngIf="isAuthenticated()">Logout</a></li>
+                <li appDropdown class="dropdown" *ngIf="isAuthenticated()">
+                        <a class="dropdown-toggle" role="button">
+                            <img class="user-image" src="http://placehold.it/300x300" height="50px">
+                            Username <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a (click)="onSaveData()">
+                                    <span class="fa fa-user"></span> Profile Settings
+                            </a></li>
+                            <li><a (click)="onLogout()"><span class="fa fa-sign-out"></span> Logout</a></li>
+                        </ul>    
+                </li>
             </ul>
         </div>
     </div>

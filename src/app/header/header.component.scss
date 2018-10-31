@@ -3,6 +3,25 @@ nav.navbar {
     border-radius: 0;
     margin: 0;
 
+    .navbar-nav {
+        margin-right: 0;
+
+        a.dropdown-toggle {
+            padding: 5px 10px;
+        }
+
+        img.user-image {
+            height: 40px;
+        }
+
+        ul.dropdown-menu {
+            a {
+                font-size: 14px;
+                padding-left: 15px;
+            }
+        }
+    }
+
     .navbar-brand {
         font-size: 28px;
         font-weight: 500;
