@@ -1,6 +1,192 @@
 .container {
-    height: 100%;
-    background-color: #D8DFE7;
+    padding: 0;
     border-radius: 4px;
     box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+    
+    color: #586670;
+
+    .row.main {
+        background-color: #D8DFE7;
+    }
+
+    // Chat area
+    .chat-area {
+        padding: 0;
+
+            .user-info.media {
+                background-color: #BECBDA;
+                padding: 0;
+
+                img {
+                    height: 110px;
+                }
+
+                .media-body {
+                    padding: 0 5px;
+                    font-size: 13px;
+
+                    p {
+                        margin: 10px 0 0 0;
+                        font-size: 20px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        
+
+        // Messages
+        .messages-wrapper {
+            padding: 5px;
+        }
+        .messages {
+            height: 540px;
+            font-size: 13px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            padding: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .message {
+                padding: 0;
+            }
+
+            .sent-message, .received-message {
+                border: none;
+                margin-bottom: 10px;
+                margin-left: 10px;
+                margin-right: 10px;
+
+                .panel-heading {
+                    padding: 5px 10px 3px 10px;
+                    font-weight: 500;
+                }
+
+                .panel-body {
+                    padding: 5px 10px 7px 10px;
+                }
+            }
+
+            .received-message {
+                .panel-heading {
+                    background-color: #BECBDA;;
+                    color: #586670;
+                 }
+
+                .has-arrow-left {
+                    position: relative;
+                    border-top-right-radius: 0;
+                }
+                .has-arrow-left:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 7px;
+                    left: -16px;
+                    border: 8px solid transparent;
+                    border-right: 8px solid #fff;
+                }
+            }
+
+            .sent-message { 
+                .panel-heading {
+                   background-color: #F1CBB1;
+                   color: #824217;
+                }
+
+                .has-arrow-right {
+                    position: relative;
+                    border-top-right-radius: 0;
+                }
+                .has-arrow-right:before {
+                    content: '';
+                    position: absolute;
+                    bottom: 7px;
+                    left: 100%;
+                    border: 8px solid transparent;
+                    border-left: 8px solid #fff;
+                }
+            }
+        }
+
+        .message-form {
+            padding: 0 !important;
+
+            form {
+                padding: 0 10px;
+            }
+        }
+    }
+
+    // Sidebar
+    .sidebar {
+        background-color: #fff;
+        padding: 0;
+
+        .user-tabs {
+
+            li.active {
+                background-color: #fff;
+            }
+
+            li {
+                background-color: #f3f3f3;
+
+                a {
+                    padding: 5px;
+                    border-radius: 0;
+                    color: #586670;
+                    border: medium none;
+                    font-size: 14px;
+                }
+            }
+
+        }
+
+        // User list
+        .user-list {
+            height: 620px;
+            padding: 7px 0;
+            overflow-y: auto;
+
+            .user-item {
+                padding-bottom: 3px;
+                cursor: pointer;
+            }
+
+            .media:hover {
+                background-color: #f3f3f3;
+            }
+
+            .media {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 2px;
+
+                .media-left {
+                    padding: 0;
+                }
+
+                img {
+                    height: 70px;
+                    padding-left: 3px;
+                }
+
+                .media-body {
+                    padding: 0 5px;
+                    font-size: 13px;
+
+                    p {
+                        margin: 3px 0 0 0;
+                        font-size: 14px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        // Search users
+        .search-users {
+            margin: 15px 15px 20px 10px;
+        }
+    }
 }
