@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
    currentUser: User;
    users: User[];
    onlineOnly: boolean = true;
+   searchInput: string = '';
 
    constructor(private authService: AuthService,
       private socketService: SocketService,

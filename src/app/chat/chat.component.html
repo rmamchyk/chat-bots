@@ -119,7 +119,7 @@
 
         <!-- Users list -->
         <div class="user-list">
-            <div class="user-item" *ngFor="let user of users">
+            <div class="user-item" *ngFor="let user of users | search: searchInput">
                 <div class="media col-md-12" [hidden]="onlineOnly && !user.online">
                     <div class="media-left">
                         <img class="media-object" src="http://placehold.it/300x300"  alt="">
@@ -131,11 +131,14 @@
                     </div>
                 </div>
             </div>
+            <div class="no-users-found" *ngIf="users && !(users | search: searchInput).length">
+                <span class="fa fa-search"></span>&nbsp;&nbsp;No users found
+            </div>
         </div>
 
         <!-- Search users -->
         <div class="search-users">
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" [(ngModel)]="searchInput" placeholder="Search...">
         </div>  
     </div>
 </div>
