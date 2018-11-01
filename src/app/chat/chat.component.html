@@ -8,104 +8,45 @@
                     <img class="media-object" src="http://placehold.it/300x300"  alt="">
                 </div>
                 <div class="media-body">
-                    <p class="username media-heading">Username</p>
+                    <p class="username media-heading">{{selectedUser.username || 'Username'}}</p>
                     <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit...</span>
                 </div>
             </div>
 
         <!-- Messages -->
         <div class="messages-wrapper">
-                <div class="messages col-md-12 col-md-12">
-                        <div class="message col-md-9">
-                            <div class="panel received-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-left">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. </span>
-                                </div>
+            <div class="messages col-md-12 col-md-12">
+                <ng-container *ngFor="let msg of messages">
+                    <div class="message col-md-9 col-md-offset-3" *ngIf="msg.sender === currentUser._id">
+                        <div class="panel sent-message">
+                            <div class="panel-heading">{{msg.sender}}</div>
+                            <div class="panel-body has-arrow-right">
+                                <span>{{msg.text}}</span>
                             </div>
                         </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message col-md-9 col-md-offset-3">
-                            <div class="panel sent-message">
-                                <div class="panel-heading">Username</div>
-                                <div class="panel-body has-arrow-right">
-                                    <span>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</span>
-                                </div>
+                    </div> 
+        
+                    <div class="message col-md-9" *ngIf="msg.sender !== currentUser._id">
+                        <div class="panel received-message">
+                            <div class="panel-heading">{{msg.sender}}</div>
+                            <div class="panel-body has-arrow-left">
+                                <span>{{msg.text}}</span>
                             </div>
                         </div>
                     </div>
+                </ng-container>
+            </div>
         </div>
         
         <!-- Message form -->
         <div class="message-form col-md-12 col-sm-12">
-            <form class="form-horizontal">
-                    <div class="col-sm-10 col-xs-10 col-md-10" style="padding: 0 10px 0 0;">
-                        <input type="text" name="message" class="form-control" placeholder="Start chatting!"> 
+            <form class="form-horizontal" (ngSubmit)="onSubmitMessage()" [formGroup]="messageForm" autocomplete="off">
+                    <div class="col-sm-9 col-xs-9 col-md-9 col-lg-10" style="padding: 0 10px 0 0;">
+                        <input type="text" name="message" class="form-control" placeholder="Start chatting!"  formControlName="message"> 
                     </div>
-                    <button class="btn btn-primary col-sm-2 col-xs-2 col-md-2" type="submit">Send Message</button>
+                    <button [disabled]="messageForm.invalid" class="btn btn-primary col-sm-3 col-xs-3 col-md-3 col-lg-2" type="submit">
+                        <span class="fa fa-send"></span>&nbsp;&nbsp;Send Message
+                    </button>
             </form>
         </div>
     </div>
@@ -120,7 +61,7 @@
         <!-- Users list -->
         <div class="user-list">
             <div class="user-item" *ngFor="let user of users | search: searchInput">
-                <div class="media col-md-12" [hidden]="onlineOnly && !user.online">
+                <div class="media col-md-12" (click)="onSelectUser(user)" [ngClass]="{'selected': user === selectedUser}" [hidden]="onlineOnly && !user.online">
                     <div class="media-left">
                         <img class="media-object" src="http://placehold.it/300x300"  alt="">
                         <span [ngClass]="{'online': user.online, 'offline': !user.online}"></span>

@@ -19,12 +19,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 require('./server/socket/globalRoom')(io);
+require('./server/socket/privateChat')(io);
 
 // Getting routes
 const users = require('./server/controllers/user.controller');
+const messages = require('./server/controllers/message.controller');
 
 // Setting routes
 app.use('/users', users);
+app.use('/message', messages);
 
 // Catch all other routes request and return it to the index
 app.get('*', (req, res) => {

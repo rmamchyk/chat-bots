@@ -1,11 +1,15 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Event } from '../shared/models/Event';
 import { User } from '../shared/models/User';
+import { Message } from '../shared/models/Message';
 import { AuthService } from '../auth/auth.service';
 import { SocketService } from '../shared/services/socket.service';
 import { UserService } from '../shared/services/user.service';
+import { ValidatorHelper } from '../helpers/ValidatorHelper';
+import { MessageService } from '../shared/services/message.service';
 
 @Component({
   selector: 'chat',
@@ -17,12 +21,44 @@ export class ChatComponent implements OnInit {
    users: User[];
    onlineOnly: boolean = true;
    searchInput: string = '';
+   selectedUser: User = new User();
+
+   messageForm: FormGroup;
+
+   messages: Message[] = [];
 
    constructor(private authService: AuthService,
       private socketService: SocketService,
-      private userService: UserService) { }
+      private userService: UserService,
+      private msgService: MessageService) { }
+
+   get message() { return this.messageForm.get('message'); }
+
+   onSubmitMessage() {
+      if (this.messageForm.invalid) {
+         return;
+      }
+      let msg = new Message();
+      msg.sender = this.currentUser._id;
+      msg.text = this.message.value.trim();
+      msg.receiver = this.selectedUser._id;
+
+      this.msgService.postMessage(msg).subscribe(
+         res => {
+            console.log('SENT: ', msg);
+            this.socketService.sendMessage(msg);
+         },
+         err => console.log(err)
+      );
+
+      this.messageForm.reset();
+   }
    
    ngOnInit() {
+      this.messageForm = new FormGroup({
+         'message': new FormControl('', [Validators.required, ValidatorHelper.minLength(1)])
+      });
+
       this.currentUser = this.authService.getCurrentUser();
       this.socketService.connect();
 
@@ -47,6 +83,13 @@ export class ChatComponent implements OnInit {
             })
       });
 
+      this.socketService.onMessage().subscribe(
+         msg => {
+            console.log('RECEIVED: ', msg);
+            this.messages.push(msg);
+         }
+      );
+
       this.userService.getUsers().subscribe(
          users => {
             this.users = users;
@@ -61,5 +104,13 @@ export class ChatComponent implements OnInit {
 
    showAllUsers() {
       this.onlineOnly = false;
+   }
+
+   onSelectUser(user: User) {
+      this.selectedUser = user;
+      this.socketService.joinPrivateRoom({
+         sender: this.currentUser._id,
+         receiver: this.selectedUser._id
+      });
    }
 }

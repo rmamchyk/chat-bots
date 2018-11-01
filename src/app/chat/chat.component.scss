@@ -120,6 +120,10 @@
 
             form {
                 padding: 0 10px;
+
+                button {
+                    font-size: 13px;
+                }
             }
         }
     }
@@ -152,11 +156,10 @@
         // User list
         .user-list {
             height: 620px;
-            padding: 7px 0;
+            padding: 2px 0;
             overflow-y: auto;
 
             .user-item {
-                padding-bottom: 3px;
                 cursor: pointer;
             }
 
@@ -164,10 +167,14 @@
                 background-color: #f3f3f3;
             }
 
+            .media.selected {
+                background-color: #ebf6f9;
+            }
+
             .media {
                 width: 100%;
                 padding: 0;
-                margin-bottom: 2px;
+                border-bottom: 1px solid #f3f3f3;
 
                 .circle:before {
                     content: ' \25CF';
@@ -181,7 +188,7 @@
                     content: '';
                     position: absolute;
                     bottom: 6px;
-                    left: 57px;
+                    left: 54px;
                     border: 6px solid transparent;
                     border: 6px solid #00D831;
                     border-radius: 50%;
@@ -194,7 +201,7 @@
                     content: '';
                     position: absolute;
                     bottom: 6px;
-                    left: 57px;
+                    left: 54px;
                     border: 6px solid transparent;
                     border: 6px solid gray;
                     border-radius: 50%;
@@ -206,7 +213,7 @@
 
                 img {
                     height: 70px;
-                    padding-left: 3px;
+                    padding-left: 0;
                 }
 
                 .media-body {
