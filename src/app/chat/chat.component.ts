@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit {
 
       this.msgService.postMessage(msg).subscribe(
          res => {
-            console.log('SENT: ', msg);
             this.socketService.sendMessage(msg);
          },
          err => console.log(err)
@@ -85,7 +84,6 @@ export class ChatComponent implements OnInit {
 
       this.socketService.onMessage().subscribe(
          msg => {
-            console.log('RECEIVED: ', msg);
             this.messages.push(msg);
          }
       );

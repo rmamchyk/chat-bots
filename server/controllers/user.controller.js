@@ -30,7 +30,7 @@ router.delete('/logout', authenticate, (req, res)=>{
 });
 
 router.get('/', authenticate, (req, res) => {
-      userService.getUsers()
+      userService.getUsers(req.user._id)
          .then(users => res.send(users))
          .catch(err => res.status(400).send(err));
 })

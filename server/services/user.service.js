@@ -46,9 +46,9 @@ module.exports = {
     async logoutUser(user) {
         return await user.removeToken();
     },
-    getUsers() {
+    getUsers(userId) {
         return new Promise((resolve, reject) => {
-            User.find({}, (err, users) => {
+            User.find({'_id' : {$ne: userId}}, (err, users) => {
                 if (err) {
                     reject(err);
                 }
