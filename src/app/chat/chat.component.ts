@@ -1,9 +1,11 @@
-import { AuthService } from '../auth/auth.service';
-import { SocketService } from '../shared/socket.service';
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Event } from '../shared/models/Event';
 import { User } from '../shared/models/User';
+import { AuthService } from '../auth/auth.service';
+import { SocketService } from '../shared/services/socket.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'chat',
@@ -12,18 +14,20 @@ import { User } from '../shared/models/User';
 })
 export class ChatComponent implements OnInit {
    currentUser: User;
-   onlineUsers: {username: string, image: string}[];
+   users: User[];
+   onlineOnly: boolean = true;
 
    constructor(private authService: AuthService,
-      private socketService: SocketService) { }
+      private socketService: SocketService,
+      private userService: UserService) { }
    
    ngOnInit() {
       this.currentUser = this.authService.getCurrentUser();
-      this.socketService.initSocket();
+      this.socketService.connect();
 
       this.socketService.onEvent(Event.CONNECT)
          .subscribe(() => {
-            this.socketService.joinOnlineRoom({
+            this.socketService.joinGlobalRoom({
                username: this.currentUser.username,
                image: this.currentUser.image
             });
@@ -34,9 +38,27 @@ export class ChatComponent implements OnInit {
             console.log('disconnected');
       });
 
-      this.socketService.onEvent(Event.ONLINE_USERS)
-      .subscribe((users) => {
-         this.onlineUsers = users;
-   });
+      this.socketService.onEvent(Event.GLOBAL_ROOM_UPDATE)
+         .subscribe((onlineUsers) => {
+            this.users.forEach(user => {
+               let found = _.find(onlineUsers, ou => ou.username === user.username);
+               user.online = !!found;
+            })
+      });
+
+      this.userService.getUsers().subscribe(
+         users => {
+            this.users = users;
+         },
+         err => console.log(err)
+      );
+   }
+
+   showOnlineUsers() {
+      this.onlineOnly = true;
+   }
+
+   showAllUsers() {
+      this.onlineOnly = false;
    }
 }

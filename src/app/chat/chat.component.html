@@ -113,16 +113,17 @@
     <!-- Sidebar  -->
     <div class="col-md-3 sidebar">
         <ul class="nav nav-tabs nav-justified user-tabs">
-            <li role="presentation" class="active"><a href="#">Online</a></li>
-            <li role="presentation"><a href="#">All</a></li>
+            <li role="presentation" (click)="showOnlineUsers()" [ngClass]="{'active': onlineOnly }"><a href="#">Online</a></li>
+            <li role="presentation" (click)="showAllUsers()" [ngClass]="{'active': !onlineOnly }"><a href="#">All</a></li>
         </ul>
 
         <!-- Users list -->
         <div class="user-list">
-            <div class="user-item" *ngFor="let user of onlineUsers">
-                <div class="media col-md-12">
+            <div class="user-item" *ngFor="let user of users">
+                <div class="media col-md-12" [hidden]="onlineOnly && !user.online">
                     <div class="media-left">
                         <img class="media-object" src="http://placehold.it/300x300"  alt="">
+                        <span [ngClass]="{'online': user.online, 'offline': !user.online}"></span>
                     </div>
                     <div class="media-body">
                         <p class="username media-heading">{{user.username}}</p>

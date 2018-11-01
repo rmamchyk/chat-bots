@@ -45,5 +45,15 @@ module.exports = {
     },
     async logoutUser(user) {
         return await user.removeToken();
+    },
+    getUsers() {
+        return new Promise((resolve, reject) => {
+            User.find({}, (err, users) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(users);
+            });
+        })
     }
 };

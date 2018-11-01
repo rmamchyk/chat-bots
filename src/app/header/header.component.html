@@ -13,7 +13,7 @@
                 <li appDropdown class="dropdown" *ngIf="isAuthenticated()">
                         <a class="dropdown-toggle" role="button">
                             <img class="user-image" src="http://placehold.it/300x300" height="50px">
-                            Username <span class="caret"></span>
+                            {{currentUser}} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a (click)="onSaveData()">

@@ -4,4 +4,5 @@ export class User {
     public email: string;
     public token: string;
     public image: string;
+    public online: boolean;
 }

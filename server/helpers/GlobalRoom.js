@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-class OnlineUsers {
+class GlobalRoom {
     constructor(){
         this.users = [];
     }
@@ -30,4 +30,4 @@ class OnlineUsers {
     }
 }
 
-module.exports = {OnlineUsers};
+module.exports = {GlobalRoom};

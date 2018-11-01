@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
@@ -11,7 +11,8 @@ import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ErrorInterceptor } from './shared/error.interceptor';
 import { DropdownDirective } from './shared/dropdown.directive';
-import { SocketService } from './shared/socket.service';
+import { SocketService } from './shared/services/socket.service';
+import { UserService } from './shared/services/user.service';
 
 @NgModule({
   declarations: [
@@ -23,11 +24,13 @@ import { SocketService } from './shared/socket.service';
   imports: [
     BrowserModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,
     SocketService,
+    UserService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

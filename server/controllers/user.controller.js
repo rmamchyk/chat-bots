@@ -23,10 +23,16 @@ router.post('/login', (req, res)=>{
       .catch(err => res.status(400).send(err));
   });
 
-router.delete('/logout', authenticate, async (req, res)=>{
+router.delete('/logout', authenticate, (req, res)=>{
       userService.logoutUser(req.user)
         .then(res.status(200).send())
         .catch(err => res.status(400).send(err));
-  });
+});
+
+router.get('/', authenticate, (req, res) => {
+      userService.getUsers()
+         .then(users => res.send(users))
+         .catch(err => res.status(400).send(err));
+})
 
 module.exports = router;

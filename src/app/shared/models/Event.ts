@@ -1,5 +1,7 @@
 export enum Event {
     CONNECT = 'connect',
     DISCONNECT = 'disconnect',
-    ONLINE_USERS = 'online users'
+    MESSAGE = 'message',
+    JOIN_GLOBAL_ROOM = 'join global room',
+    GLOBAL_ROOM_UPDATE = 'global room update'
 }

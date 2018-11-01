@@ -1,14 +1,19 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { User } from '../shared/models/User';
+import { SocketService } from './../shared/services/socket.service';
 
 @Injectable()
 export class AuthService {
+    currentUser: Subject<User>;
+
     constructor(private router: Router,
-        private http: HttpClient) {}
+        private http: HttpClient,
+        private socketService: SocketService) {}
 
     isAuthenticated(): boolean {
         return !!localStorage.getItem('currentUser');
@@ -21,7 +26,7 @@ export class AuthService {
     logout() {
         return this.http.delete('/users/logout').subscribe(
             res => {
-                // remove user from local storage to log user out
+                this.socketService.disconnect();
                 localStorage.removeItem('currentUser');
                 this.router.navigate(['/login']);
             },

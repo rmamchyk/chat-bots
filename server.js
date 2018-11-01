@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-require('./server/socket/onlineRoom')(io);
+require('./server/socket/globalRoom')(io);
 
 // Getting routes
 const users = require('./server/controllers/user.controller');

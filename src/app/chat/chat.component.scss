@@ -163,6 +163,37 @@
                 padding: 0;
                 margin-bottom: 2px;
 
+                .circle:before {
+                    content: ' \25CF';
+                    font-size: 25px;
+                  }
+
+                .online {
+                    position: relative;
+                }
+                .online:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 6px;
+                    left: 57px;
+                    border: 6px solid transparent;
+                    border: 6px solid #00D831;
+                    border-radius: 50%;
+                }
+
+                .offline {
+                    position: relative;
+                }
+                .offline:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 6px;
+                    left: 57px;
+                    border: 6px solid transparent;
+                    border: 6px solid gray;
+                    border-radius: 50%;
+                }
+
                 .media-left {
                     padding: 0;
                 }

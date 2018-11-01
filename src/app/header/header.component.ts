@@ -8,10 +8,15 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  currentUser: string;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    let user = this.authService.getCurrentUser();
+    if (user) {
+      this.currentUser = user.username;
+    }
   }
 
   isAuthenticated() {
