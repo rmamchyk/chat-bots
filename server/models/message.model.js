@@ -5,7 +5,7 @@ var messageSchema = mongoose.Schema({
     sender: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     isRead: {type: Boolean, default: false},
-    createdAt: {type: Date, default: Date.now}
+    createdAt: {type: Number, default: Date.now}
 });
 
 module.exports = mongoose.model('Message', messageSchema);

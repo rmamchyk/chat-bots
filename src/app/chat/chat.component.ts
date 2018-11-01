@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Event } from '../shared/models/Event';
@@ -11,12 +11,16 @@ import { UserService } from '../shared/services/user.service';
 import { ValidatorHelper } from '../helpers/ValidatorHelper';
 import { MessageService } from '../shared/services/message.service';
 
+
+
 @Component({
   selector: 'chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
+   @ViewChild('messageList') messageList: ElementRef;
+
    currentUser: User;
    users: User[];
    onlineOnly: boolean = true;
@@ -42,6 +46,7 @@ export class ChatComponent implements OnInit {
       msg.sender = this.currentUser._id;
       msg.text = this.message.value.trim();
       msg.receiver = this.selectedUser._id;
+      msg.createdAt = Date.now()
 
       this.msgService.postMessage(msg).subscribe(
          res => {
@@ -106,9 +111,26 @@ export class ChatComponent implements OnInit {
 
    onSelectUser(user: User) {
       this.selectedUser = user;
+      this.msgService.getMessages(user._id).subscribe(
+         messages => {
+            this.messages = messages;
+         },
+         err => console.log(err)
+      );
       this.socketService.joinPrivateRoom({
          sender: this.currentUser._id,
          receiver: this.selectedUser._id
       });
    }
+
+   ngAfterViewChecked(): void {
+        this.scrollToBottom();
+    }
+  
+    private scrollToBottom(): void {
+      try {
+        this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+      } catch (err) {
+      }
+    }
 }

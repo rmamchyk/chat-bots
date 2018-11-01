@@ -9,9 +9,10 @@ export class MessageService {
     constructor(private http: HttpClient) {}
 
     postMessage(msg: Message) {
-        return this.http.post('/message', {
-            text: msg.text,
-            receiver: msg.receiver
-        });
+        return this.http.post('/message', msg);
+    }
+
+    getMessages(receiver: string) {
+        return this.http.get<Message[]>(`/message/${receiver}`);
     }
 }

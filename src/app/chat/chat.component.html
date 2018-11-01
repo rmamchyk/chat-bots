@@ -15,11 +15,11 @@
 
         <!-- Messages -->
         <div class="messages-wrapper">
-            <div class="messages col-md-12 col-md-12">
+            <div class="messages col-md-12 col-md-12" #messageList>
                 <ng-container *ngFor="let msg of messages">
                     <div class="message col-md-9 col-md-offset-3" *ngIf="msg.sender === currentUser._id">
                         <div class="panel sent-message">
-                            <div class="panel-heading">{{msg.sender}}</div>
+                            <div class="panel-heading">{{currentUser.username}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
                             <div class="panel-body has-arrow-right">
                                 <span>{{msg.text}}</span>
                             </div>
@@ -28,7 +28,7 @@
         
                     <div class="message col-md-9" *ngIf="msg.sender !== currentUser._id">
                         <div class="panel received-message">
-                            <div class="panel-heading">{{msg.sender}}</div>
+                            <div class="panel-heading">{{selectedUser.username}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
                             <div class="panel-body has-arrow-left">
                                 <span>{{msg.text}}</span>
                             </div>

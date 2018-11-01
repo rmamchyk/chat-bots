@@ -11,7 +11,8 @@ module.exports = function(io){
             // send the private message to user-receiver.
             io.to(message.receiver).emit('message', {
                 text: message.text,
-                sender: message.sender
+                sender: message.sender,
+                createdAt: message.createdAt
             });
         });
     });
