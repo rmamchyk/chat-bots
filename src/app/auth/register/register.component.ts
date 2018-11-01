@@ -1,8 +1,8 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { ValidatorHelper } from './../../helpers/ValidatorHelper';
-import { AuthService } from './../auth.service';
+import { ValidatorHelper } from '../../helpers/ValidatorHelper';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',

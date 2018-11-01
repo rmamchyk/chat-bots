@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@types/socket.io-client": "^1.4.32",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bootstrap": "^3.3.7",
@@ -31,6 +32,8 @@
     "mongodb": "^3.1.8",
     "mongoose": "^5.3.7",
     "rxjs": "~6.2.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "validator": "^10.8.0",
     "zone.js": "~0.8.26"
   },

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { User } from './../shared/user.model';
+import { User } from '../shared/models/User';
 
 @Injectable()
 export class AuthService {

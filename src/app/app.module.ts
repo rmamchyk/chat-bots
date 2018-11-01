@@ -4,18 +4,19 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { ChatComponent } from './chat/chat.component';
 import { AppRoutingModule } from './app.routing.module';
 import { HeaderComponent } from './header/header.component';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { ErrorInterceptor } from './shared/error.interceptor';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { SocketService } from './shared/socket.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    ChatComponent,
     HeaderComponent,
     DropdownDirective
   ],
@@ -26,6 +27,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
   ],
   providers: [
     AuthService,
+    SocketService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
