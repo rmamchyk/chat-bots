@@ -1,3 +1,5 @@
+import { Message } from './Message';
+
 export class User {
     public _id: string;
     public username: string;
@@ -5,4 +7,6 @@ export class User {
     public token: string;
     public image: string;
     public online: boolean;
+    public lastMessage: Message;
+    public unreadCount: number;
 }

@@ -43,14 +43,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
          return;
       }
       let msg = new Message();
-      msg.sender = this.currentUser._id;
+      msg.sender = this.currentUser.username;
       msg.text = this.message.value.trim();
-      msg.receiver = this.selectedUser._id;
+      msg.receiver = this.selectedUser.username;
       msg.createdAt = Date.now()
 
       this.msgService.postMessage(msg).subscribe(
-         res => {
-            this.socketService.sendMessage(msg);
+         savedMsg => {
+            this.socketService.sendMessage(savedMsg);
          },
          err => console.log(err)
       );
@@ -65,13 +65,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       this.currentUser = this.authService.getCurrentUser();
       this.socketService.connect();
+      
 
       this.socketService.onEvent(Event.CONNECT)
          .subscribe(() => {
-            this.socketService.joinGlobalRoom({
-               username: this.currentUser.username,
-               image: this.currentUser.image
-            });
+            this.userService.getUsers().subscribe(
+              users => {
+                this.users = users;
+                this.socketService.joinGlobalRoom({
+                  username: this.currentUser.username,
+                  image: this.currentUser.image
+              });
+              },
+              err => console.log(err)
+            );
          });
 
       this.socketService.onEvent(Event.DISCONNECT)
@@ -89,16 +96,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
       this.socketService.onMessage().subscribe(
          msg => {
-            this.messages.push(msg);
+            if (msg.sender == this.selectedUser.username) {
+              this.messages.push(msg);
+              let sender = _.find(this.users, u => u.username === msg.sender);
+              sender.lastMessage = msg;
+              this.msgService.updateMessage(msg._id);
+            } else if (msg.sender == this.currentUser.username) {
+              this.messages.push(msg);
+              let receiver = _.find(this.users, u => u.username === msg.receiver);
+              receiver.lastMessage = msg;
+            } else {
+              let sender = _.find(this.users, u => u.username === msg.sender);
+              sender.lastMessage = msg;
+              sender.unreadCount++;
+            }
          }
       );
 
-      this.userService.getUsers().subscribe(
-         users => {
-            this.users = users;
-         },
-         err => console.log(err)
-      );
+
    }
 
    showOnlineUsers() {
@@ -111,15 +126,24 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
    onSelectUser(user: User) {
       this.selectedUser = user;
-      this.msgService.getMessages(user._id).subscribe(
-         messages => {
-            this.messages = messages;
-         },
-         err => console.log(err)
+
+      this.msgService.updateMessages(this.selectedUser.username).subscribe(
+        res => {
+          this.selectedUser.unreadCount = 0;
+
+          this.msgService.getMessages(this.selectedUser.username).subscribe(
+            messages => {
+               this.messages = messages;
+            },
+            err => console.log(err)
+         );
+        },
+        err => console.log(err)
       );
+
       this.socketService.joinPrivateRoom({
-         sender: this.currentUser._id,
-         receiver: this.selectedUser._id
+         sender: this.currentUser.username,
+         receiver: this.selectedUser.username
       });
    }
 

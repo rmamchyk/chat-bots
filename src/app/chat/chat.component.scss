@@ -227,11 +227,22 @@
                     padding: 0 5px;
                     font-size: 13px;
 
+                    .unread-count.badge {
+                        float: right;
+                        background-color: lightblue;
+                    }
+
+                    .last-message {
+                        font-size: 12px;
+                    }
+
                     p {
                         margin: 3px 0 0 0;
                         font-size: 14px;
                         font-weight: bold;
                     }
+
+                    
                 }
             }
         }

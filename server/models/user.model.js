@@ -33,11 +33,11 @@ var UserSchema = new mongoose.Schema({
     }
 });
 
-UserSchema.methods.toJSON = function(){
-  var user = this;
-  var userObj = user.toObject();
-  return _.pick(userObj, ['_id', 'username', 'email', 'token']);
-};
+// UserSchema.methods.toJSON = function(){
+//   var user = this;
+//   var userObj = user.toObject();
+//   return _.pick(userObj, ['_id', 'username', 'email', 'token']);
+// };
 
 UserSchema.methods.generateToken = function() {
    let user = this;

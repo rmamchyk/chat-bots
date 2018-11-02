@@ -17,18 +17,18 @@
         <div class="messages-wrapper">
             <div class="messages col-md-12 col-md-12" #messageList>
                 <ng-container *ngFor="let msg of messages">
-                    <div class="message col-md-9 col-md-offset-3" *ngIf="msg.sender === currentUser._id">
+                    <div class="message col-md-9 col-md-offset-3" *ngIf="msg.sender === currentUser.username">
                         <div class="panel sent-message">
-                            <div class="panel-heading">{{currentUser.username}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
+                            <div class="panel-heading">{{msg.sender}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
                             <div class="panel-body has-arrow-right">
                                 <span>{{msg.text}}</span>
                             </div>
                         </div>
                     </div> 
         
-                    <div class="message col-md-9" *ngIf="msg.sender !== currentUser._id">
+                    <div class="message col-md-9" *ngIf="msg.sender !== currentUser.username">
                         <div class="panel received-message">
-                            <div class="panel-heading">{{selectedUser.username}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
+                            <div class="panel-heading">{{msg.sender}} <span class="msg-date">{{msg.createdAt | date:'shortTime'}}</span></div>
                             <div class="panel-body has-arrow-left">
                                 <span>{{msg.text}}</span>
                             </div>
@@ -67,8 +67,8 @@
                         <span [ngClass]="{'online': user.online, 'offline': !user.online}"></span>
                     </div>
                     <div class="media-body">
-                        <p class="username media-heading">{{user.username}}</p>
-                        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit...</span>
+                        <p class="username media-heading">{{user.username}}</p><span *ngIf="user.unreadCount > 0" class="unread-count badge">{{user.unreadCount}}</span>
+                        <span class="last-message" *ngIf="user.lastMessage">{{user.lastMessage.text | shorten: 50}}</span>
                     </div>
                 </div>
             </div>

@@ -7,12 +7,16 @@ module.exports = function(io){
         });
 
         // listen to private message and pass it to user-receiver.
-        socket.on('message', (message) => {
+        socket.on('message', (msg) => {
             // send the private message to user-receiver.
-            io.to(message.receiver).emit('message', {
-                text: message.text,
-                sender: message.sender,
-                createdAt: message.createdAt
+            io.to(msg.receiver).emit('message', {
+                _id: msg._id,
+                text: msg.text,
+                sender: msg.sender,
+                receiver: msg.receiver,
+                createdAt: msg.createdAt,
+                isRead: msg.isRead,
+                readAt: msg.readAt
             });
         });
     });
