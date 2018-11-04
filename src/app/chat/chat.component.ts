@@ -29,6 +29,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
    messages: Message[] = [];
 
+   userTyping: boolean;
+   userTypingTimer;
+
    constructor(private authService: AuthService,
       private socketService: SocketService,
       private userService: UserService,
@@ -95,6 +98,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.socketService.onMessage().subscribe(
          msg => {
             if (msg.sender == this.selectedUser.username) {
+              this.userTyping = false;
               this.messages.push(msg);
               let sender = _.find(this.users, u => u.username === msg.sender);
               sender.lastMessage = msg;
@@ -129,6 +133,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           });
         }
       );
+
+      this.socketService.onTyping().subscribe(
+        data => {
+          if (data.sender == this.selectedUser.username) {
+            clearInterval(this.userTypingTimer);
+            this.userTyping = true;
+            this.userTypingTimer = setTimeout(()=> {
+              this.userTyping = false
+            }, 1000);
+          }
+        }
+      )
+   }
+
+   onInputChange() {
+     this.socketService.isTyping({
+       sender: this.currentUser.username,
+       receiver: this.selectedUser.username
+     });
    }
 
    showOnlineUsers() {

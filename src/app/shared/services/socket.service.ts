@@ -39,6 +39,16 @@ export class SocketService {
         });
     }
 
+    public isTyping(data: {sender: string, receiver: string}): void {
+        this.socket.emit(Event.TYPING, data);
+    }
+
+    public onTyping(): Observable<{sender: string}> {
+        return new Observable<{sender: string}>(observer => {
+            this.socket.on(Event.TYPING, (data: {sender: string}) => observer.next(data));
+        })
+    }
+
     public joinGlobalRoom(user: {username: string, image: string}): void {
         this.socket.emit(Event.JOIN_GLOBAL_ROOM, user);
     }

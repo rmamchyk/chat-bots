@@ -9,5 +9,9 @@ module.exports = function(io){
         socket.on('message seen', data => {
             io.to(data.sender).emit('message seen', {readAt: data.readAt});
         });
+
+        socket.on('typing', data => {
+            io.to(data.receiver).emit('typing', {sender: data.sender});
+        })
     });
 }
