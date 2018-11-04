@@ -23,9 +23,19 @@ export class SocketService {
         this.socket.emit(Event.MESSAGE, message);
     }
 
+    public messageSeen(data: {readAt: number, sender: string}):void {
+        this.socket.emit(Event.MESSAGE_SEEN, data);
+    }
+
     public onMessage(): Observable<Message> {
         return new Observable<Message>(observer => {
             this.socket.on(Event.MESSAGE, (data: Message) => observer.next(data));
+        });
+    }
+
+    public onMessageSeen(): Observable<{readAt: number}> {
+        return new Observable<{readAt: number}>(observer => {
+            this.socket.on(Event.MESSAGE_SEEN, (data: {readAt: number}) => observer.next(data));
         });
     }
 

@@ -11,8 +11,6 @@ import { UserService } from '../shared/services/user.service';
 import { ValidatorHelper } from '../helpers/ValidatorHelper';
 import { MessageService } from '../shared/services/message.service';
 
-
-
 @Component({
   selector: 'chat',
   templateUrl: './chat.component.html',
@@ -100,7 +98,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
               this.messages.push(msg);
               let sender = _.find(this.users, u => u.username === msg.sender);
               sender.lastMessage = msg;
-              this.msgService.updateMessage(msg._id);
+              this.msgService.updateMessages(msg.sender).subscribe(
+                data => {
+                  this.socketService.messageSeen({readAt: data.readAt, sender: msg.sender});
+                },
+                err => console.log(err)
+            );
             } else if (msg.sender == this.currentUser.username) {
               this.messages.push(msg);
               let receiver = _.find(this.users, u => u.username === msg.receiver);
@@ -113,6 +116,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
          }
       );
 
+      this.socketService.onMessageSeen().subscribe(
+        data => {
+          this.messages.forEach(msg => {
+            if(!msg.isRead) {
+              msg.readAt = data.readAt;
+              msg.isRead = true;
+            }
+          });
+        }
+      );
 
    }
 
@@ -128,8 +141,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.selectedUser = user;
 
       this.msgService.updateMessages(this.selectedUser.username).subscribe(
-        res => {
+        data => {
           this.selectedUser.unreadCount = 0;
+          
+          this.socketService.messageSeen({readAt: data.readAt, sender: this.selectedUser.username});
 
           this.msgService.getMessages(this.selectedUser.username).subscribe(
             messages => {

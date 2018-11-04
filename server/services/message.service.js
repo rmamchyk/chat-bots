@@ -37,35 +37,18 @@ module.exports = {
 
     updateMessages(receiver, sender) {
         return new Promise((resolve, reject) => {
-            Message.updateMany({
-                '$and': [{'receiver': receiver}, {'sender':sender}]
-            }, 
-            {
-                '$set': {'isRead': true, 'readAt': Date.now()}
-            }, (err, result) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                } 
-                resolve(result);
-            });
-        });
-    },
+            let readAt = Date.now();
 
-    updateMessage(id) {
-        return new Promise((resolve, reject) => {
-            Message.updateOne({
-                '_id': ObjectId(id)
+            Message.updateMany({
+                '$and': [{'receiver': receiver}, {'sender':sender}, {'isRead' : {$ne: true}}]
             }, 
             {
-                '$set': {'isRead': true, 'readAt': Date.now()}
+                '$set': {'isRead': true, 'readAt': readAt}
             }, (err, result) => {
                 if (err) {
-                    console.log(err);
                     reject(err);
                 } 
-                console.log('ONE IS READ', result);
-                resolve(result);
+                resolve({readAt});
             });
         });
     }

@@ -16,14 +16,7 @@ export class MessageService {
         return this.http.get<Message[]>(`/message/${receiver}`);
     }
 
-    updateMessages(sender: string) {
-        return this.http.put(`/message`, {sender});
-    }
-
-    updateMessage(id: string) {
-        return this.http.put(`/message/${id}`, {}).subscribe(
-            res => {},
-            err => console.log(err)
-        );
+    updateMessages(sender: string): Observable<{readAt: number}> {
+        return this.http.put<{readAt: number}>(`/message`, {sender});
     }
 }

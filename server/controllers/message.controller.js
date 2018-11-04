@@ -26,16 +26,7 @@ router.put('/', authenticate, (req, res) => {
     let sender = req.body.sender;
 
     msgService.updateMessages(req.user.username, sender)
-        .then(res.status(204).send())
-        .catch(err => res.status(400).send(err));
-});
-
-router.put('/:id', authenticate, (req, res) => {
-    console.log('UPDATE ONE', req.params);
-    let id = req.params.id;
-
-    msgService.updateMessage(id)
-        .then(res.status(204).send())
+        .then(result => res.status(200).send(result))
         .catch(err => res.status(400).send(err));
 });
 

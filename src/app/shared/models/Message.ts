@@ -4,4 +4,6 @@ export class Message {
     public sender: string;
     public receiver: string;
     public createdAt: number;
+    public isRead: boolean;
+    public readAt: number;
 }
