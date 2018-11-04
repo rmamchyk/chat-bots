@@ -100,7 +100,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
               sender.lastMessage = msg;
               this.msgService.updateMessages(msg.sender).subscribe(
                 data => {
-                  this.socketService.messageSeen({readAt: data.readAt, sender: msg.sender});
+                  this.socketService.messageSeen({
+                    readAt: data.readAt, 
+                    sender: msg.sender
+                  });
                 },
                 err => console.log(err)
             );
@@ -126,7 +129,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           });
         }
       );
-
    }
 
    showOnlineUsers() {
@@ -144,7 +146,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         data => {
           this.selectedUser.unreadCount = 0;
           
-          this.socketService.messageSeen({readAt: data.readAt, sender: this.selectedUser.username});
+          this.socketService.messageSeen({
+            readAt: data.readAt,
+            sender: this.selectedUser.username
+          });
 
           this.msgService.getMessages(this.selectedUser.username).subscribe(
             messages => {
@@ -155,11 +160,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         },
         err => console.log(err)
       );
-
-      this.socketService.joinPrivateRoom({
-         sender: this.currentUser.username,
-         receiver: this.selectedUser.username
-      });
    }
 
    ngAfterViewChecked(): void {

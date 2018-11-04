@@ -43,10 +43,6 @@ export class SocketService {
         this.socket.emit(Event.JOIN_GLOBAL_ROOM, user);
     }
 
-    public joinPrivateRoom(room: {sender: string, receiver: string}): void {
-        this.socket.emit(Event.JOIN_PRIVATE_ROOM, room);
-    }
-
     public onGlobalRoomUpdate(): Observable<{username: string, image: string }[]> {
         return new Observable<{username: string, image: string }[]>(observer => {
             this.socket.on(Event.GLOBAL_ROOM_UPDATE, data => observer.next(data));

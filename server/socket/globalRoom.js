@@ -10,6 +10,8 @@ module.exports = function(io){
         socket.on('join global room', (user) => {
             socket.join(ONLINE_ROOM);
 
+            socket.join(user.username);
+
             global.addUser(socket.id, user.username, user.image);
             
             const onlineUsers = global.getUsers();

@@ -56,13 +56,15 @@
 
             .message {
                 padding: 0;
-                margin-bottom: 5px;
+                margin-bottom: 3px;
 
                 .seen-date {
                     margin-left: 10px;
                     margin-bottom: 10px;
                     font-size: 11px;
                     color: #9eb1c7;
+                    position: relative;
+                    top: -2px;
                 }
             }
 
@@ -90,6 +92,8 @@
             }
 
             .received-message {
+                margin-bottom: 4px;
+
                 .panel-heading {
                     background-color: #BECBDA;
                     color: #586670;

@@ -81,8 +81,8 @@ module.exports = {
                                     "last_message_between":{
                                         $cond: [{
                                             $gt:[
-                                                {$substr:["$sender",0,1]},
-                                                {$substr:["$receiver",0,1]}
+                                                {$substr:["$sender",0,-1]},
+                                                {$substr:["$receiver",0,-1]}
                                             ]},
                                             {$concat:["$sender"," and ","$receiver"]},
                                             {$concat:["$receiver"," and ","$sender"]}
